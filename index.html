@@ -1,13 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>u7109(゜-゜)つロ 干杯~</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>惊喜倒计时！</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #b3d8ff, #ffe6f2);
+      text-align: center;
+      margin: 0;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    p {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .countdown {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #333;
+    }
+    
+    .birthday-message {
+      display: none;
+    }
+  </style>
 </head>
-<body style="background-color:beige;">
-    <h1>你好 (゜-゜)つロ 干杯~</h1>
-    <hr>
-    <a href="hello_ca.html" target="_blank">干杯</a>
-    <a href="play_computer.html" target="_blank">真的是你呀</a>
+<body>
+  <h1 id="title">惊喜倒计时！</h1>
+  <div class="birthday-message" id="birthdayMessage">
+    <p style="color: #FF69B4;">亲爱的 陈雨嘉，</p>
+    <p style="color: #FF69B4;">在这个特别的日子里，我想对你说：</p>
+    <p style="color: #FF69B4;">愿你的生日充满欢乐和温馨，</p>
+    <p style="color: #FF69B4;">愿你的未来一年更加美好，</p>
+    <p style="color: #FF69B4;">愿你的每个愿望都能实现。</p>
+    <p style="color: #FF69B4;">生日快乐！</p>
+    <p style="color: #FF69B4;">这是你来到这个世界的第 <span id="daysAlive"></span> 天。</p>
+  </div>
+  
+  <div class="countdown" id="countdown"></div>
+  
+  <script>
+    // 定义生日的月份和日期
+    var birthdayMonth = 8; // 修改为你朋友的生日月份
+    var birthdayDay = 18; // 修改为你朋友的生日日期
+    
+    // 获取当前日期和时间
+    var currentDate = new Date();
+    // 获取生日日期
+    var birthday = new Date(currentDate.getFullYear(), birthdayMonth - 1, birthdayDay);
+    
+    // 如果今天是生日
+    if (currentDate.getMonth() === birthdayMonth - 1 && currentDate.getDate() === birthdayDay) {
+      document.getElementById('title').innerHTML = "生日快乐！";
+      document.getElementById('title').style.color = "#FF69B4";
+      document.getElementById('birthdayMessage').innerHTML = "<p style=\"color: #FF69B4;\">亲爱的 陈雨嘉，</p><p style=\"color: #FF69B4;\">今天是你的生日！</p><p style=\"color: #FF69B4;\">愿你的生日充满欢乐和温馨，</p><p style=\"color: #FF69B4;\">愿你的未来一年更加美好，</p><p style=\"color: #FF69B4;\">愿你的每个愿望都能实现。</p><p style=\"color: #FF69B4;\">生日快乐！</p><p style=\"color: #FF69B4;\">这是你来到这个世界的第 <span id=\"daysAlive\"></span> 天。</p><p style=\"color: #FF69B4;\">生日快乐，陈雨嘉，天天开心</p>";
+      document.getElementById('birthdayMessage').style.display = 'block';
+      document.getElementById('countdown').style.display = 'none';
+    } else {
+      // 设置生日的年份为当前年份
+      birthday.setFullYear(currentDate.getFullYear());
+      // 如果生日已经过去，则将生日年份设置为下一年
+      if (currentDate > birthday) {
+        birthday.setFullYear(currentDate.getFullYear() + 1);
+      }
+      
+      // 计算倒计时
+      var timeDiff = birthday.getTime() - currentDate.getTime();
+      var seconds = Math.floor(timeDiff / 1000);
+      
+      // 更新倒计时显示
+      var countdownElement = document.getElementById('countdown');
+      setInterval(function() {
+        var days = Math.floor(seconds / (24 * 60 * 60));
+        var hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+        var minutes = Math.floor((seconds % (60 * 60)) / 60);
+        var remainingSeconds = seconds % 60;
+        
+        countdownElement.innerHTML = "惊喜倒计时：" + days + " 天 " + hours + " 小时 " + minutes + " 分钟 " + remainingSeconds + " 秒";
+        
+        seconds--;
+      }, 1000);
+    }
+
+    // 计算从出生到今天的天数
+    var birthDate = new Date("2009-08-18"); // 修改为朋友的出生日期，格式为 "yyyy-mm-dd"
+    var daysAlive = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
+    document.getElementById("daysAlive").innerHTML = daysAlive;
+  </script>
 </body>
 </html>
