@@ -27,7 +27,7 @@
     }
     
     .countdown {
-      font-size: 24px;
+      font-size: 36px;
       margin-top: 20px;
       color: #333;
     }
@@ -65,7 +65,6 @@
     if (currentDate.getMonth() === birthdayMonth - 1 && currentDate.getDate() === birthdayDay) {
       document.getElementById('title').innerHTML = "生日快乐！";
       document.getElementById('title').style.color = "#FF69B4";
-      document.getElementById('birthdayMessage').innerHTML = "<p style=\"color: #FF69B4;\">亲爱的 陈雨嘉，</p><p style=\"color: #FF69B4;\">今天是你的生日！</p><p style=\"color: #FF69B4;\">愿你的生日充满欢乐和温馨，</p><p style=\"color: #FF69B4;\">愿你的未来一年更加美好，</p><p style=\"color: #FF69B4;\">愿你的每个愿望都能实现。</p><p style=\"color: #FF69B4;\">生日快乐！</p><p style=\"color: #FF69B4;\">这是你来到这个世界的第 <span id=\"daysAlive\"></span> 天。</p><p style=\"color: #FF69B4;\">生日快乐，陈雨嘉，天天开心</p>";
       document.getElementById('birthdayMessage').style.display = 'block';
       document.getElementById('countdown').style.display = 'none';
     } else {
