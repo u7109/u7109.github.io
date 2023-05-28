@@ -36,6 +36,18 @@
       display: none;
     }
   </style>
+  <style>
+    a.button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 10px;
+      background-color: #f1f1f1;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <h1 id="title">惊喜倒计时！</h1>
@@ -99,5 +111,6 @@
     var daysAlive = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
     document.getElementById("daysAlive").innerHTML = daysAlive;
   </script>
+  <a href="zhongkao.html" class="button">中考倒计时</a>
 </body>
 </html>
