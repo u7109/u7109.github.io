@@ -16,39 +16,15 @@
       color: #333;
     }
     
-    p {
-      font-size: 20px;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    
-    p:last-child {
-      margin-bottom: 0;
-    }
-    
     .countdown {
       font-size: 36px;
       margin-top: 20px;
       color: #333;
     }
-    
-    .birthday-message {
-      display: none;
-    }
   </style>
 </head>
 <body>
-  <h1 id="title">惊喜倒计时！</h1>
-  <div class="birthday-message" id="birthdayMessage">
-    <p style="color: #FF69B4;">亲爱的 陈雨嘉，</p>
-    <p style="color: #FF69B4;">在这个特别的日子里，我想对你说：</p>
-    <p style="color: #FF69B4;">愿你的生日充满欢乐和温馨，</p>
-    <p style="color: #FF69B4;">愿你的未来一年更加美好，</p>
-    <p style="color: #FF69B4;">愿你的每个愿望都能实现。</p>
-    <p style="color: #FF69B4;">生日快乐！</p>
-    <p style="color: #FF69B4;">这是你来到这个世界的第 <span id="daysAlive"></span> 天。</p>
-    <p style="color: #FF69B4;">生日快乐！陈雨嘉，天天开心</p>
-  </div>
+  <h1>惊喜倒计时！</h1>
   
   <div class="countdown" id="countdown"></div>
   
@@ -64,10 +40,7 @@
     
     // 如果今天是生日
     if (currentDate.getMonth() === birthdayMonth - 1 && currentDate.getDate() === birthdayDay) {
-      document.getElementById('title').innerHTML = "生日快乐！";
-      document.getElementById('title').style.color = "#FF69B4";
-      document.getElementById('birthdayMessage').style.display = 'block';
-      document.getElementById('countdown').style.display = 'none';
+      window.location.href = "birthday.html";
     } else {
       // 设置生日的年份为当前年份
       birthday.setFullYear(currentDate.getFullYear());
@@ -88,16 +61,11 @@
         var minutes = Math.floor((seconds % (60 * 60)) / 60);
         var remainingSeconds = seconds % 60;
         
-        countdownElement.innerHTML = "惊喜倒计时：" + days + " 天 " + hours + " 小时 " + minutes + " 分钟 " + remainingSeconds + " 秒";
+        countdownElement.textContent = "惊喜倒计时：" + days + " 天 " + hours + " 小时 " + minutes + " 分钟 " + remainingSeconds + " 秒";
         
         seconds--;
       }, 1000);
     }
-
-    // 计算从出生到今天的天数
-    var birthDate = new Date("2009-08-18"); // 修改为朋友的出生日期，格式为 "yyyy-mm-dd"
-    var daysAlive = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
-    document.getElementById("daysAlive").innerHTML = daysAlive;
   </script>
 </body>
 </html>
