@@ -1,0 +1,1 @@
+在我的软件里面需要用到scapy库，需要WinPcap这个软件，您也可以去www.winpcap.org上面购买
