@@ -47,9 +47,9 @@
     // 获取当前日期和时间
     var currentDate = new Date();
     
-    // 如果不是生日当天，则自动跳转到 index.html
+    // 如果不是生日当天，则自动跳转到 wait.html
     if (currentDate.getMonth() !== birthdayMonth - 1 || currentDate.getDate() !== birthdayDay) {
-      window.location.href = "index.html";
+      window.location.href = "wait.html";
     }
     
     // 计算从出生到今天的天数
