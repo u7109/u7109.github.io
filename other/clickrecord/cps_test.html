@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPS测试</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+    #counter {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+    #timeRemaining {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .button-container {
+        margin-bottom: 20px;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div class="button-container" id="buttonContainer">
+    <label for="testTime">测试时间（秒）：</label>
+    <input type="number" id="testTime" min="1" value="10">
+    <button id="startButton" class="button">开始测试</button>
+    <button id="restartButton" class="button" style="display: none;">重新开始</button>
+</div>
+
+<div id="counter">0</div>
+<div id="timeRemaining" style="display: none;"></div>
+
+<script>
+window.onload = function() {
+    var counter = document.getElementById('counter');
+    var startButton = document.getElementById('startButton');
+    var restartButton = document.getElementById('restartButton');
+    var testTimeInput = document.getElementById('testTime');
+    var timeRemaining = document.getElementById('timeRemaining');
+    var buttonContainer = document.getElementById('buttonContainer');
+    var clicks = 0;
+    var startTime;
+    var testTime;
+
+    startButton.onclick = function() {
+        clicks = 0;
+        counter.textContent = clicks;
+        startButton.style.display = 'none';
+        restartButton.style.display = 'none';
+        testTime = parseInt(testTimeInput.value); // 获取测试时间
+        buttonContainer.style.display = 'none'; // 隐藏测试时间选项
+
+        startTime = new Date().getTime();
+
+        // 更新剩余时间的显示
+        timeRemaining.style.display = 'block';
+        updateRemainingTime();
+
+        // 注册点击事件监听器
+        document.addEventListener('click', countClick);
+
+        // 设置定时器，在测试时间结束后停止测试
+        setTimeout(function() {
+            endTest();
+        }, testTime * 1000); // 将秒转换为毫秒
+    };
+
+    function countClick() {
+        clicks++;
+        counter.textContent = clicks;
+    }
+
+    function endTest() {
+        var endTime = new Date().getTime();
+        var elapsedTime = (endTime - startTime) / 1000; // 将毫秒转换为秒
+        var cps = clicks / elapsedTime;
+        alert('测试结束！你的每秒点击次数为：' + cps.toFixed(2));
+        restartButton.style.display = 'block';
+        timeRemaining.style.display = 'none';
+        document.removeEventListener('click', countClick); // 移除点击事件监听器
+
+        // 重新显示选择测试时间的输入框和开始测试按钮
+        buttonContainer.style.display = 'flex';
+        startButton.style.display = 'none'; // 隐藏开始按钮
+    }
+
+    function updateRemainingTime() {
+        var remainingSeconds = testTime;
+        timeRemaining.textContent = '剩余时间：' + remainingSeconds + '秒';
+        var interval = setInterval(function() {
+            remainingSeconds--;
+            timeRemaining.textContent = '剩余时间：' + remainingSeconds + '秒';
+            if (remainingSeconds <= 0) {
+                clearInterval(interval);
+            }
+        }, 1000);
+    }
+
+    restartButton.onclick = function() {
+        restartButton.style.display = 'none';
+        startButton.style.display = 'block';
+    };
+};
+</script>
+
+</body>
+</html>
