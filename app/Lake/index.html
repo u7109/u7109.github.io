@@ -14,62 +14,79 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Lake</title>
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
     body {
-      background-color: #3a1c71;
-      color: #ffffff;
+      background-color: #f0f0f0;
+      color: #333333;
       font-family: Arial, sans-serif;
       text-align: center;
+      position: relative;
+      cursor: url('https://u7109.github.io/pointer.cur'), auto; /* Set default custom cursor */
     }
 
     h1 {
       font-size: 48px;
-      margin-top: 30px;
-      margin-left: 30px;
+      color: #333333;
+      margin: 30px;
       text-align: left;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    .button {
-      background-color: #ff6f00;
-      border: none;
-      color: #ffffff;
+    .button, .links a {
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-size: 24px;
-      margin: 20px;
-      padding: 10px 20px;
-      border-radius: 50px;
-      transition: background-color 0.3s ease;
-      cursor: pointer;
+      font-size: 20px;
+      margin: 10px;
+      padding: 12px 24px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer; /* Set custom cursor for buttons and links */
     }
 
-    .button:hover {
+    .button:hover, .links a:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    .button {
+      display: block;
+      font-size: 24px;
+      width: 250px;
+      margin: 20px auto;
+    }
+
+    .button.orange {
+      background-color: #ff6f00;
+      color: #ffffff;
+    }
+
+    .button.orange:hover {
       background-color: #ff4f00;
-      cursor: pointer;
     }
 
     .links {
       position: absolute;
       top: 30px;
       right: 30px;
-      font-size: 20px;
     }
 
     .links a {
+      background-color: #007bff;
       color: #ffffff;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-
-    .info {
       font-size: 18px;
-      margin-bottom: 20px;
     }
 
-    .disclaimer {
-      font-size: 16px;
-      margin-top: 50px;
+    .links a:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -82,7 +99,7 @@
     <a href="https://u7109.github.io/app/Lake/oldversion/oldversions.html">旧版本</a>
     <a href="https://github.com/u7109/HackerTool-Lake">GitHub</a>
   </div>
-  <a href="https://u7109.github.io/app/Lake/oldversion/download.html" class="button">立刻下载</a>
+  <a href="https://u7109.github.io/app/Lake/oldversion/download.html" class="button orange">立刻下载</a>
   <div class="info">
     <p>版本：V0.3</p>
     <p>更新时间：2024.2.9</p>
