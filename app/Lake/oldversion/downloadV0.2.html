@@ -47,7 +47,7 @@
     .button {
       display: block;
       font-size: 24px;
-      width: 250px;
+      width: 270px;
       margin: 20px auto;
     }
 
@@ -75,6 +75,14 @@
     .links a:hover {
       background-color: #0056b3;
     }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px; /* Adjust the gap between buttons */
+    }
+
   </style>
 </head>
 <body>
@@ -86,20 +94,22 @@
     <a href="https://github.com/u7109/HackerTool-Lake">GitHub</a>
   </div>
   <h2 class="title">LakeV0.2</h2>
-  <h2>如果只使用ddos就不用下载必要软件</h2>
-  <div>
-    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/WinPcap_4_1_3.exe" class="button orange">必要软件（直接下载）</a>
-    <a href="https://u7109.lanzoue.com/iC0qQ17x2w5g" class="button orange">必要软件（蓝奏云下载）</a>
+  <h2>只使用ddos就不用下载必要软件</h2>
+  <div class="button-container">
+    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/WinPcap_4_1_3.exe" class="button orange" style="margin-right: 10px;">必要软件（直接下载）</a>
+    <a href="https://u7109.lanzoue.com/iC0qQ17x2w5g" class="button orange" style="margin-left: 0;">必要软件（蓝奏云下载）</a>
   </div>
-  <div>
-    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x32.zip" class="button orange">32位（直接下载）</a>
-    <a href="https://u7109.lanzoue.com/iRVg417x39rg" class="button orange">32位（蓝奏云下载）</a>
+
+  <div class="button-container">
+    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x32.zip" class="button orange" style="margin-right: 10px;">32位（直接下载）</a>
+    <a href="https://u7109.lanzoue.com/iRVg417x39rg" class="button orange" style="margin-left: 0;">32位（蓝奏云下载）</a>
   </div>
-  <div>
-    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x64.zip" class="button orange">64位（直接下载）</a>
-    <a href="https://u7109.lanzoue.com/iilSW17x3aid" class="button orange">64位（蓝奏云下载）</a>
+
+  <div class="button-container">
+    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x64.zip" class="button orange" style="margin-right: 10px;">64位（直接下载）</a>
+    <a href="https://u7109.lanzoue.com/iilSW17x3aid" class="button orange" style="margin-left: 0;">64位（蓝奏云下载）</a>
   </div>
-  <div class="changelog">
+  <div class="changelog" style="position: absolute; left: 0; text-align: left; margin-left: 20px;">
     <h3>更新日志：</h3>
     <ul>
       <li>arp欺骗自动获取网关</li>

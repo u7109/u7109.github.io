@@ -89,7 +89,34 @@
       margin-top: 50px;
       color: #999999;
     }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #666666;
+      font-size: 16px;
+    }
   </style>
+  <script>
+    function updateUptime() {
+      const startDate = new Date('2023-04-09T00:00:00');
+      const now = new Date();
+      const diff = Math.abs(now - startDate);
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      const uptimeText = `网站已运行 ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
+      document.getElementById('uptime').innerText = uptimeText;
+    }
+
+    setInterval(updateUptime, 1000); // Update every second
+  </script>
 </head>
 <body>
   <h1>u7109</h1>
@@ -103,5 +130,8 @@
     <a href="https://u7109.github.io/pan/panlist.html">云盘</a>
     <a href="https://github.com/u7109">GitHub</a>
   </div>
+  <footer>
+    <p id="uptime"></p>
+  </footer>
 </body>
 </html>

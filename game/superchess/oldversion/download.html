@@ -47,7 +47,7 @@
     .button {
       display: block;
       font-size: 24px;
-      width: 250px;
+      width: 270px;
       margin: 20px auto;
     }
 
@@ -75,6 +75,14 @@
     .links a:hover {
       background-color: #0056b3;
     }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px; /* Adjust the gap between buttons */
+    }
+
   </style>
 </head>
 <body>
@@ -87,16 +95,16 @@
   </div>
   <h2 class="title">superchessV0.0.1</h2>
   <h2>提取码均为：u7109</h2>
-  <div>
-    <a href="https://github.com/u7109/superchess/releases/download/V0.0.1/superchessV0.0.1.x32.exe" class="button orange">32位（直接下载）</a>
-    <a href="https://u7109.lanzouw.com/iwTf626keeli" class="button orange">32位（蓝奏云下载）</a>
+  <div class="button-container">
+    <a href="https://github.com/u7109/superchess/releases/download/V0.0.1/superchessV0.0.1.x32.exe" class="button orange" style="margin-right: 10px;">32位（直接下载）</a>
+    <a href="https://u7109.lanzouw.com/iwTf626keeli" class="button orange" style="margin-left: 0;">32位（蓝奏云下载）</a>
   </div>
-  <div>
-    <a href="https://github.com/u7109/superchess/releases/download/V0.0.1/superchessV0.0.1.x64.exe" class="button orange">64位（直接下载）</a>
-    <a href="https://u7109.lanzouw.com/ii5aR26keemj" class="button orange">64位（蓝奏云下载）</a>
+  <div class="button-container">
+    <a href="https://github.com/u7109/superchess/releases/download/V0.0.1/superchessV0.0.1.x64.exe" class="button orange" style="margin-right: 10px;">64位（直接下载）</a>
+    <a href="https://u7109.lanzouw.com/ii5aR26keemj" class="button orange" style="margin-left: 0;">64位（蓝奏云下载）</a>
   </div>
   <h3>更新日期：2024.8.5</h3>
-  <div class="changelog">
+  <div class="changelog" style="position: absolute; left: 0; text-align: left; margin-left: 20px;">
     <h3>更新日志：</h3>
     <ul>
       <li>1.增加了井字棋规则</li>
