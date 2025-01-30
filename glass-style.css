@@ -1,0 +1,59 @@
+/* 创建 glass-style.css 文件 */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --gradient-bg: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  }
+  
+  body {
+    background: var(--gradient-bg) fixed;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+  }
+  
+  /* 毛玻璃基础样式 */
+  .glass-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+  }
+  
+  .glass-button {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    padding: 0.8rem 1.5rem;
+    border-radius: 2rem;
+    color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  
+  /* 其他通用组件样式 */
+  .glass-table {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }

@@ -1,133 +1,317 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>u7109</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>u7109 - 主站</title>
+  
+  <!-- 公共毛玻璃样式 -->
   <style>
-    html, body {
-      height: 100%;
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --gradient-primary: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      --text-primary: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
     }
 
     body {
-      background-color: #f0f0f0;
-      color: #333333;
-      font-family: Arial, sans-serif;
+      background: var(--gradient-primary) fixed;
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2rem;
+      cursor: url('https://u7109.github.io/pointer.cur'), auto;
+      font-size: calc(1rem + 0.5vw); /* 根据屏幕宽度自适应字体 */
+    }
+
+    /* 导航栏样式 */
+    .main-header {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      left: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+
+    .brand {
+      font-size: 2rem;
+      font-weight: 300;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .glass-btn {
+      display: inline-flex;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw); /* 增大按钮字体 */
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 毛玻璃容器 */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin: 6rem auto 2rem;
+      max-width: 1200px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 内容区域 */
+    .content-section {
+      padding: 2rem;
+      margin: 2rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+    }
+
+    /* 页脚样式 */
+    .main-footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+    }
+
+    /* 边栏样式（默认隐藏） */
+    .sidebar {
+      display: none;
+      position: fixed;
+      top: 2rem;
+      left: 0;
+      bottom: 0;
+      width: 200px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.5rem;
+      padding: 1rem;
+      z-index: 1001;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%);
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 1rem 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 汉堡菜单样式 */
+    .hamburger {
+      display: block;
+      width: 30px;
+      height: 25px;
       position: relative;
-      text-align: center;
-      cursor: url('https://u7109.github.io/pointer.cur'), auto; /* Set default custom cursor */
+      cursor: pointer;
     }
 
-    h1 {
-      font-size: 48px;
-      color: #333333;
-      margin: 0;
-      padding: 20px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      text-align: left;
-    }
-
-    p {
-      font-size: 24px;
-      color: #666666;
-    }
-
-    .button {
-      background-color: #007bff;
-      border: none;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 20px;
-      margin: 20px;
-      padding: 12px 24px;
-      border-radius: 25px;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      cursor: url('https://u7109.github.io/link.cur'), pointer; /* Set custom cursor for buttons */
-    }
-
-    .button:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
-    }
-
-    .links {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-    }
-
-    .links a {
-      background-color: #007bff;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 18px;
-      margin: 10px;
-      padding: 12px 24px;
-      border-radius: 25px;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      cursor: url('link.cur'), pointer; /* Set custom cursor for links */
-    }
-
-    .links a:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
-    }
-
-    .info {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: #666666;
-    }
-
-    .disclaimer {
-      font-size: 16px;
-      margin-top: 50px;
-      color: #999999;
-    }
-
-    footer {
-      position: absolute;
-      bottom: 10px;
-      left: 0;
+    .hamburger div {
+      background-color: var(--text-primary);
+      height: 5px;
       width: 100%;
-      text-align: center;
-      color: #666666;
-      font-size: 16px;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger div:nth-child(1) {
+      top: 0;
+    }
+
+    .hamburger div:nth-child(2) {
+      top: 10px;
+    }
+
+    .hamburger div:nth-child(3) {
+      top: 20px;
+    }
+
+    /* 小屏设备优化 */
+    @media (max-width: 768px) {
+      /* 隐藏顶部导航栏 */
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none; /* 隐藏默认导航 */
+      }
+
+      /* 显示边栏 */
+      .sidebar {
+        display: block;
+      }
+
+      /* 显示汉堡菜单 */
+      .hamburger {
+        display: block;
+      }
+
+      /* 调整边栏链接样式 */
+      .sidebar a {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
+      }
+
+      /* 调整内容区域 */
+      .glass-panel {
+        margin-top: 2rem;
+        padding: 1.5rem;
+      }
+
+      .content-section {
+        padding: 1.5rem;
+      }
+    }
+
+    /* 大屏设备（桌面端）隐藏汉堡菜单 */
+    @media (min-width: 769px) {
+      .hamburger {
+        display: none; /* 隐藏汉堡菜单 */
+      }
+
+      .sidebar {
+        display: none; /* 确保桌面端没有边栏 */
+      }
+
+      .nav-links {
+        display: flex; /* 在大屏设备上显示默认导航 */
+      }
+    }
+
+    /* 浏览器兼容性处理 */
+    @supports not (backdrop-filter: blur(12px)) {
+      .glass-panel,
+      .main-header,
+      .glass-btn,
+      .sidebar {
+        background: rgba(255, 255, 255, 0.7);
+      }
     }
   </style>
+
+  <!-- 公共脚本 -->
   <script>
+    // 运行时间计算器
     function updateUptime() {
       const startDate = new Date('2023-04-09T00:00:00');
-      const now = new Date();
-      const diff = Math.abs(now - startDate);
-
+      const formatNumber = num => num.toString().padStart(2, '0');
+      
+      const diff = Date.now() - startDate.getTime();
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      const hours = formatNumber(Math.floor((diff / (1000 * 60 * 60)) % 24));
+      const minutes = formatNumber(Math.floor((diff / (1000 * 60)) % 60));
+      const seconds = formatNumber(Math.floor((diff / 1000) % 60));
 
-      const uptimeText = `网站已运行 ${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
-      document.getElementById('uptime').innerText = uptimeText;
+      document.getElementById('uptime').innerHTML = `🕒 已运行：${days} 天 ${hours}小时${minutes}分钟${seconds}秒`;
     }
+    setInterval(updateUptime, 1000);
 
-    setInterval(updateUptime, 1000); // Update every second
+    // 汉堡菜单点击事件
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const hamburgerDivs = document.querySelectorAll('.hamburger div');
+
+      // 切换边栏的显示
+      sidebar.style.transform = sidebar.style.transform === 'translateX(0%)' ? 'translateX(-100%)' : 'translateX(0%)';
+
+      // 动画效果，汉堡菜单变成关闭图标
+      if (sidebar.style.transform === 'translateX(0%)') {
+        hamburgerDivs[0].style.transform = 'rotate(45deg)';
+        hamburgerDivs[1].style.opacity = '0';
+        hamburgerDivs[2].style.transform = 'rotate(-45deg)';
+      } else {
+        hamburgerDivs[0].style.transform = 'rotate(0)';
+        hamburgerDivs[1].style.opacity = '1';
+        hamburgerDivs[2].style.transform = 'rotate(0)';
+      }
+    }
   </script>
 </head>
+
 <body>
-  <h1>u7109</h1>
-  <p>qwq</p>
-  <div class="links">
-    <a href="#">首页</a>
-    <a href="https://u7109.github.io/app/applist.html">软件</a>
-    <a href="https://u7109.github.io/pan/panlist.html">云盘</a>
-    <a href="https://github.com/u7109">GitHub</a>
+  <header class="main-header">
+    <a href="/" class="brand">u7109</a>
+
+    <!-- 汉堡菜单 -->
+    <div class="hamburger" onclick="toggleSidebar()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="/" class="glass-btn">🏠 首页</a>
+      <a href="/app/applist.html" class="glass-btn">📱 软件</a>
+      <a href="/pan/panlist.html" class="glass-btn">☁️ 云盘</a>
+      <a href="https://github.com/u7109" class="glass-btn">🐙 GitHub</a>
+    </nav>
+  </header>
+
+  <!-- 边栏 -->
+  <div class="sidebar">
+    <a href="/" class="glass-btn">🏠 首页</a>
+    <a href="/app/applist.html" class="glass-btn">📱 软件</a>
+    <a href="/pan/panlist.html" class="glass-btn">☁️ 云盘</a>
+    <a href="https://github.com/u7109" class="glass-btn">🐙 GitHub</a>
   </div>
-  <footer>
+
+  <main class="glass-panel">
+    <!-- 页面专属内容 -->
+    <section class="content-section">
+      <h1>qwq</h1>
+    </section>
+  </main>
+
+  <footer class="main-footer">
     <p id="uptime"></p>
   </footer>
 </body>
