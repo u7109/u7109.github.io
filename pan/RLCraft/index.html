@@ -1,96 +1,340 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>RLCraft存档</title>
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-      }
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RLCraft 存档</title>
   
-      body {
-        background-color: #f0f0f0;
-        color: #333333;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        position: relative;
-        cursor: url('https://u7109.github.io/pointer.cur'), auto; /* Set default custom cursor */
+  <!-- 公共毛玻璃样式 -->
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --gradient-primary: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      --text-primary: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--gradient-primary) fixed;
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2rem;
+      cursor: url('https://u7109.github.io/pointer.cur'), auto;
+      font-size: calc(1rem + 0.5vw);
+    }
+
+    .main-header {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      left: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+
+    .brand {
+      font-size: 2rem;
+      font-weight: 300;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .glass-btn {
+      display: inline-flex;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin: 6rem auto 2rem;
+      max-width: 1200px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section {
+      padding: 2rem;
+      margin: 2rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      text-align: center;
+    }
+
+    .content-section h1 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar {
+      display: none;
+      position: fixed;
+      top: 2rem;
+      left: 0;
+      bottom: 0;
+      width: 200px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.5rem;
+      padding: 1rem;
+      z-index: 1001;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%);
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 1rem 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hamburger {
+      display: block;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      background-color: var(--text-primary);
+      height: 5px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger div:nth-child(1) {
+      top: 0;
+    }
+
+    .hamburger div:nth-child(2) {
+      top: 10px;
+    }
+
+    .hamburger div:nth-child(3) {
+      top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .main-header {
+        display: flex;
+        justify-content: space-between;
       }
-  
-      h1 {
-        font-size: 48px;
-        color: #333333;
-        margin: 30px;
-        text-align: left;
-        position: absolute;
-        top: 0;
-        left: 0;
+
+      .nav-links {
+        display: none;
       }
-  
-      .button, .links a {
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        margin: 10px;
-        padding: 12px 24px;
-        border-radius: 25px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        cursor: url('https://u7109.github.io/link.cur'), pointer; /* Set custom cursor for buttons and links */
-      }
-  
-      .button:hover, .links a:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-      }
-  
-      .button {
+
+      .sidebar {
         display: block;
-        font-size: 24px;
-        width: 250px;
-        margin: 20px auto;
       }
-  
-      .button.orange {
-        background-color: #ff6f00;
-        color: #ffffff;
+
+      .hamburger {
+        display: block;
       }
-  
-      .button.orange:hover {
-        background-color: #ff4f00;
+
+      .sidebar a {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
       }
-  
-      .links {
-        position: absolute;
-        top: 30px;
-        right: 30px;
+
+      .glass-panel {
+        margin-top: 2rem;
+        padding: 1.5rem;
       }
-  
-      .links a {
-        background-color: #007bff;
-        color: #ffffff;
-        font-size: 18px;
+
+      .content-section {
+        padding: 1.5rem;
       }
-  
-      .links a:hover {
-        background-color: #0056b3;
+    }
+
+    @media (min-width: 769px) {
+      .hamburger {
+        display: none;
       }
-    </style>
-  </head>
+
+      .sidebar {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    @supports not (backdrop-filter: blur(12px)) {
+      .glass-panel,
+      .main-header,
+      .glass-btn,
+      .sidebar {
+        background: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    /* 页面专属样式 */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .download-button {
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+      margin-bottom: 1rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .download-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 图片网格布局 */
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-gap: 1rem;
+    }
+
+    .image-gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .image-gallery img:hover {
+      transform: scale(1.05);
+    }
+
+  </style>
+
+  <!-- 公共脚本 -->
+  <script>
+    // 汉堡菜单点击事件
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const hamburgerDivs = document.querySelectorAll('.hamburger div');
+
+      sidebar.style.transform = sidebar.style.transform === 'translateX(0%)' ? 'translateX(-100%)' : 'translateX(0%)';
+
+      if (sidebar.style.transform === 'translateX(0%)') {
+        hamburgerDivs[0].style.transform = 'rotate(45deg)';
+        hamburgerDivs[1].style.opacity = '0';
+        hamburgerDivs[2].style.transform = 'rotate(-45deg)';
+      } else {
+        hamburgerDivs[0].style.transform = 'rotate(0)';
+        hamburgerDivs[1].style.opacity = '1';
+        hamburgerDivs[2].style.transform = 'rotate(0)';
+      }
+    }
+  </script>
+</head>
 <body>
-  <h1>u7109</h1>
-  <div class="links">
-    <a href="https://u7109.github.io/pan/panlist.html">云盘首页</a>
-    <a href="https://github.com/u7109">GitHub</a>
-  </div>
-  <div>
-    <a href="https://u7109.github.io/pan/RLCraft/新的世界（2024.7.9，10：57）.zip" class="button orange">新的世界(2024.7.9,10:57).zip(直接下载)</a>
-    <a href="https://u7109.lanzouw.com/iuu6p23yqqre" class="button orange">新的世界(2024.7.9,10:57).zip(蓝奏云下载)</a>
+  <header class="main-header">
+    <a href="/" class="brand">u7109</a>
+
+    <!-- 汉堡菜单 -->
+    <div class="hamburger" onclick="toggleSidebar()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="https://u7109.github.io" class="glass-btn">🏠 首页</a>
+      <a href="https://u7109.github.io/app/applist.html" class="glass-btn">📱 软件</a>
+      <a href="https://u7109.github.io/pan/panlist.html" class="glass-btn">☁️ 云盘</a>
+      <a href="https://github.com/u7109" class="glass-btn">🐙 GitHub</a>
+    </nav>
+  </header>
+
+  <!-- 侧边栏 -->
+  <div class="sidebar">
+    <a href="https://u7109.github.io" class="glass-btn">🏠 首页</a>
+    <a href="https://u7109.github.io/app/applist.html" class="glass-btn">📱 软件</a>
+    <a href="https://u7109.github.io/pan/panlist.html" class="glass-btn">☁️ 云盘</a>
+    <a href="https://github.com/u7109" class="glass-btn">🐙 GitHub</a>
   </div>
 
-  <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.21.png" alt="picture">
-  <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.24.png" alt="picture">
-  <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.33.png" alt="picture">
-  <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.44.png" alt="picture">
+  <main class="glass-panel">
+    <!-- 页面专属内容 -->
+    <section class="content-section">
+      <h1>RLCraft 存档</h1>
+
+      <div class="button-container">
+        <a href="https://u7109.github.io/pan/RLCraft/新的世界（2024.7.9，10：57）.zip" class="download-button">📁 新的世界 (2024.7.9, 10:57).zip（直接下载）</a>
+        <a href="https://u7109.lanzouw.com/iuu6p23yqqre" class="download-button">📁 新的世界 (2024.7.9, 10:57).zip（蓝奏云下载）</a>
+      </div>
+
+      <div class="image-gallery">
+        <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.21.png" alt="picture">
+        <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.24.png" alt="picture">
+        <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.33.png" alt="picture">
+        <img src="https://u7109.github.io/pan/RLCraft/picture/2024-07-09_10.53.44.png" alt="picture">
+      </div>
+    </section>
+  </main>
 </body>
 </html>

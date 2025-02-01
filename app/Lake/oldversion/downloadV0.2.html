@@ -1,125 +1,374 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LakeV0.2</title>
+  
+  <!-- 公共毛玻璃样式 -->
   <style>
-    html, body {
-      height: 100%;
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --gradient-primary: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      --text-primary: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
     }
 
     body {
-      background-color: #f0f0f0;
-      color: #333333;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      position: relative;
-      cursor: url('https://u7109.github.io/pointer.cur'), auto; /* Set default custom cursor */
+      background: var(--gradient-primary) fixed;
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2rem;
+      cursor: url('https://u7109.github.io/pointer.cur'), auto;
+      font-size: calc(1rem + 0.5vw);
     }
 
-    h1 {
-      font-size: 48px;
-      color: #333333;
-      margin: 30px;
-      text-align: left;
-      position: absolute;
-      top: 0;
-      left: 0;
+    .main-header {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      left: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 1rem 2rem;
+      z-index: 1000;
     }
 
-    .button, .links a {
-      text-align: center;
+    .brand {
+      font-size: 2rem;
+      font-weight: 300;
       text-decoration: none;
-      display: inline-block;
-      font-size: 20px;
-      margin: 10px;
-      padding: 12px 24px;
-      border-radius: 25px;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      cursor: url('https://u7109.github.io/link.cur'), pointer; /* Set custom cursor for buttons and links */
+      color: var(--text-primary);
     }
 
-    .button:hover, .links a:hover {
-      background-color: #0056b3;
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .glass-btn {
+      display: inline-flex;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin: 6rem auto 2rem;
+      max-width: 1200px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section {
+      padding: 2rem;
+      margin: 2rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      text-align: center;
+    }
+
+    .content-section h1 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar {
+      display: none;
+      position: fixed;
+      top: 2rem;
+      left: 0;
+      bottom: 0;
+      width: 200px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.5rem;
+      padding: 1rem;
+      z-index: 1001;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%);
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 1rem 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hamburger {
+      display: block;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      background-color: var(--text-primary);
+      height: 5px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger div:nth-child(1) {
+      top: 0;
+    }
+
+    .hamburger div:nth-child(2) {
+      top: 10px;
+    }
+
+    .hamburger div:nth-child(3) {
+      top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .sidebar {
+        display: block;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .sidebar a {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
+      }
+
+      .glass-panel {
+        margin-top: 2rem;
+        padding: 1.5rem;
+      }
+
+      .content-section {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .hamburger {
+        display: none;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    @supports not (backdrop-filter: blur(12px)) {
+      .glass-panel,
+      .main-header,
+      .glass-btn,
+      .sidebar {
+        background: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    /* 页面专属样式 */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .download-button {
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+      margin-bottom: 1rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .download-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 图片网格布局 */
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-gap: 1rem;
+    }
+
+    .image-gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .image-gallery img:hover {
       transform: scale(1.05);
     }
 
-    .button {
-      display: block;
-      font-size: 24px;
-      width: 270px;
-      margin: 20px auto;
-    }
-
-    .button.orange {
-      background-color: #ff6f00;
-      color: #ffffff;
-    }
-
-    .button.orange:hover {
-      background-color: #ff4f00;
-    }
-
-    .links {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-    }
-
-    .links a {
-      background-color: #007bff;
-      color: #ffffff;
-      font-size: 18px;
-    }
-
-    .links a:hover {
-      background-color: #0056b3;
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px; /* Adjust the gap between buttons */
+    .changelog {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 1.5rem;
+      margin: 2rem 0;
+      text-align: left;
     }
 
   </style>
+
+  <!-- 公共脚本 -->
+  <script>
+    // 汉堡菜单点击事件
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const hamburgerDivs = document.querySelectorAll('.hamburger div');
+
+      sidebar.style.transform = sidebar.style.transform === 'translateX(0%)' ? 'translateX(-100%)' : 'translateX(0%)';
+
+      if (sidebar.style.transform === 'translateX(0%)') {
+        hamburgerDivs[0].style.transform = 'rotate(45deg)';
+        hamburgerDivs[1].style.opacity = '0';
+        hamburgerDivs[2].style.transform = 'rotate(-45deg)';
+      } else {
+        hamburgerDivs[0].style.transform = 'rotate(0)';
+        hamburgerDivs[1].style.opacity = '1';
+        hamburgerDivs[2].style.transform = 'rotate(0)';
+      }
+    }
+  </script>
 </head>
 <body>
-  <h1>Lake</h1>
-  <div class="links">
-    <a href="https://u7109.github.io/app/Lake/index.html">Lake首页</a>
-    <a href="https://u7109.github.io/app/Lake/oldversion/download.html">软件下载</a>
-    <a href="https://u7109.github.io/app/Lake/oldversion/oldversions.html">旧版本</a>
-    <a href="https://github.com/u7109/HackerTool-Lake">GitHub</a>
-  </div>
-  <h2 class="title">LakeV0.2</h2>
-  <h2>只使用ddos就不用下载必要软件</h2>
-  <div class="button-container">
-    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/WinPcap_4_1_3.exe" class="button orange" style="margin-right: 10px;">必要软件（直接下载）</a>
-    <a href="https://u7109.lanzoue.com/iC0qQ17x2w5g" class="button orange" style="margin-left: 0;">必要软件（蓝奏云下载）</a>
+  <header class="main-header">
+    <a href="/" class="brand">u7109</a>
+
+    <!-- 汉堡菜单 -->
+    <div class="hamburger" onclick="toggleSidebar()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="https://u7109.github.io/app/Lake/index.html" class="glass-btn">🏠 Lake 首页</a>
+      <a href="https://u7109.github.io/app/Lake/oldversion/download.html" class="glass-btn">📱 软件</a>
+      <a href="https://u7109.github.io/app/Lake/oldversion/oldversions.html" class="glass-btn">☁️ 旧版本</a>
+      <a href="https://github.com/u7109/HackerTool-Lake" class="glass-btn">🐙 GitHub</a>
+    </nav>
+  </header>
+
+  <!-- 侧边栏 -->
+  <div class="sidebar">
+    <a href="https://u7109.github.io/app/Lake/index.html" class="glass-btn">🏠 Lake 首页</a>
+    <a href="https://u7109.github.io/app/Lake/oldversion/download.html" class="glass-btn">📱 软件</a>
+    <a href="https://u7109.github.io/app/Lake/oldversion/oldversions.html" class="glass-btn">☁️ 旧版本</a>
+    <a href="https://github.com/u7109/HackerTool-Lake" class="glass-btn">🐙 GitHub</a>
   </div>
 
-  <div class="button-container">
-    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x32.zip" class="button orange" style="margin-right: 10px;">32位（直接下载）</a>
-    <a href="https://u7109.lanzoue.com/iRVg417x39rg" class="button orange" style="margin-left: 0;">32位（蓝奏云下载）</a>
-  </div>
+  <main class="glass-panel">
+    <!-- 页面专属内容 -->
+    <section class="content-section">
+      <h1>LakeV0.2</h1>
+      <h2>只使用ddos就不用下载必要软件</h2>
 
-  <div class="button-container">
-    <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x64.zip" class="button orange" style="margin-right: 10px;">64位（直接下载）</a>
-    <a href="https://u7109.lanzoue.com/iilSW17x3aid" class="button orange" style="margin-left: 0;">64位（蓝奏云下载）</a>
-  </div>
-  <div class="changelog" style="position: absolute; left: 0; text-align: left; margin-left: 20px;">
-    <h3>更新日志：</h3>
-    <ul>
-      <li>arp欺骗自动获取网关</li>
-      <li>修复了扫描同局域网的活主机IP地址的方式，修复bug</li>
-      <li>在主页显示ip地址</li>
-      <li>导出扫描到的ip地址</li>
-      <li>arp欺骗导入多个ip</li>
-      <li>arp欺骗生成全部ip地址</li>
-    </ul>
-  </div>
-  <img src="https://u7109.github.io/app/Lake/picture/LakeV0.2.png" alt="picture">
+      <div class="button-container">
+        <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.3/WinPcap_4_1_3.exe" 
+           class="glass-btn download-btn">📦 必要软件（直接下载）</a>
+        <a href="https://u7109.lanzoue.com/iC0qQ17x2w5g" 
+           class="glass-btn download-btn">☁️ 必要软件（蓝奏云下载）</a>
+      </div>
+
+      <div class="button-container">
+        <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x32.zip" 
+           class="glass-btn download-btn">💻 32位（直接下载）</a>
+        <a href="https://u7109.lanzoue.com/iRVg417x39rg" 
+           class="glass-btn download-btn">☁️ 32位（蓝奏云下载）</a>
+      </div>
+
+      <div class="button-container">
+        <a href="https://github.com/u7109/HackerTool-Lake/releases/download/v0.2/LakeV0.2.x64.zip" 
+           class="glass-btn download-btn">💻 64位（直接下载）</a>
+        <a href="https://u7109.lanzoue.com/iilSW17x3aid" 
+           class="glass-btn download-btn">☁️ 64位（蓝奏云下载）</a>
+      </div>
+
+      <div class="changelog">
+        <h3>更新日志：</h3>
+        <ul>
+          <li>arp欺骗自动获取网关</li>
+          <li>修复了扫描同局域网的活主机IP地址的方式，修复bug</li>
+          <li>在主页显示ip地址</li>
+          <li>导出扫描到的ip地址</li>
+          <li>arp欺骗导入多个ip</li>
+          <li>arp欺骗生成全部ip地址</li>
+        </ul>
+      </div>
+
+      <div class="image-gallery">
+        <img src="https://u7109.github.io/app/Lake/picture/LakeV0.2.png" alt="picture">
+      </div>
+    </section>
+  </main>
 </body>
 </html>

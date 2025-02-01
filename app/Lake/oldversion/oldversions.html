@@ -1,94 +1,321 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>Lake旧版本列表</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lake 旧版本列表</title>
+  
+  <!-- 公共毛玻璃样式 -->
   <style>
-    html, body {
-      height: 100%;
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --gradient-primary: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      --text-primary: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
     }
 
     body {
-      background-color: #f0f0f0;
-      color: #333333;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      position: relative;
-      cursor: url('https://u7109.github.io/pointer.cur'), auto; /* Set default custom cursor */
+      background: var(--gradient-primary) fixed;
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2rem;
+      cursor: url('https://u7109.github.io/pointer.cur'), auto;
+      font-size: calc(1rem + 0.5vw);
     }
 
-    h1 {
-      font-size: 48px;
-      color: #333333;
-      margin: 30px;
-      text-align: left;
-      position: absolute;
-      top: 0;
-      left: 0;
+    .main-header {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      left: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 1rem 2rem;
+      z-index: 1000;
     }
 
-    .button, .links a {
-      text-align: center;
+    .brand {
+      font-size: 2rem;
+      font-weight: 300;
       text-decoration: none;
-      display: inline-block;
-      font-size: 20px;
-      margin: 10px;
-      padding: 12px 24px;
-      border-radius: 25px;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      cursor: url('https://u7109.github.io/link.cur'), pointer; /* Set custom cursor for buttons and links */
+      color: var(--text-primary);
     }
 
-    .button:hover, .links a:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
+    .nav-links {
+      display: flex;
+      gap: 1rem;
     }
 
-    .button {
+    .glass-btn {
+      display: inline-flex;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin: 6rem auto 2rem;
+      max-width: 1200px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section {
+      padding: 2rem;
+      margin: 2rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      text-align: center;
+    }
+
+    .content-section h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .content-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar {
+      display: none;
+      position: fixed;
+      top: 2rem;
+      left: 0;
+      bottom: 0;
+      width: 200px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.5rem;
+      padding: 1rem;
+      z-index: 1001;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%);
+    }
+
+    .sidebar a {
       display: block;
-      font-size: 24px;
-      width: 250px;
-      margin: 20px auto;
+      padding: 1rem 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      transition: background 0.3s ease;
     }
 
-    .button.orange {
-      background-color: #ff6f00;
-      color: #ffffff;
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
-    .button.orange:hover {
-      background-color: #ff4f00;
+    .hamburger {
+      display: block;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      cursor: pointer;
     }
 
-    .links {
+    .hamburger div {
+      background-color: var(--text-primary);
+      height: 5px;
+      width: 100%;
       position: absolute;
-      top: 30px;
-      right: 30px;
+      left: 0;
+      transition: all 0.3s ease;
     }
 
-    .links a {
-      background-color: #007bff;
-      color: #ffffff;
-      font-size: 18px;
+    .hamburger div:nth-child(1) {
+      top: 0;
     }
 
-    .links a:hover {
-      background-color: #0056b3;
+    .hamburger div:nth-child(2) {
+      top: 10px;
     }
+
+    .hamburger div:nth-child(3) {
+      top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .sidebar {
+        display: block;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .sidebar a {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
+      }
+
+      .glass-panel {
+        margin-top: 2rem;
+        padding: 1.5rem;
+      }
+
+      .content-section {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .hamburger {
+        display: none;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    @supports not (backdrop-filter: blur(12px)) {
+      .glass-panel,
+      .main-header,
+      .glass-btn,
+      .sidebar {
+        background: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    /* 页面专属样式 */
+    .app-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-button {
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+      margin-bottom: 1rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .app-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
   </style>
+
+  <!-- 公共脚本 -->
+  <script>
+    // 汉堡菜单点击事件
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const hamburgerDivs = document.querySelectorAll('.hamburger div');
+
+      sidebar.style.transform = sidebar.style.transform === 'translateX(0%)' ? 'translateX(-100%)' : 'translateX(0%)';
+
+      if (sidebar.style.transform === 'translateX(0%)') {
+        hamburgerDivs[0].style.transform = 'rotate(45deg)';
+        hamburgerDivs[1].style.opacity = '0';
+        hamburgerDivs[2].style.transform = 'rotate(-45deg)';
+      } else {
+        hamburgerDivs[0].style.transform = 'rotate(0)';
+        hamburgerDivs[1].style.opacity = '1';
+        hamburgerDivs[2].style.transform = 'rotate(0)';
+      }
+    }
+  </script>
 </head>
 <body>
-  <h1>Lake</h1>
-  <div class="links">
-    <a href="https://u7109.github.io/app/Lake/index.html">Lake首页</a>
-    <a href="https://u7109.github.io/app/Lake/oldversion/download.html">软件下载</a>
-    <a href="https://u7109.github.io/app/Lake/oldversion/oldversions.html">旧版本</a>
-    <a href="https://github.com/u7109/HackerTool-Lake">GitHub</a>
+  <header class="main-header">
+    <a href="/" class="brand">u7109</a>
+
+    <!-- 汉堡菜单 -->
+    <div class="hamburger" onclick="toggleSidebar()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="https://u7109.github.io/app/Lake/index.html" class="glass-btn">🏠 Lake 首页</a>
+      <a href="https://u7109.github.io/app/Lake/oldversion/download.html" class="glass-btn">📱 软件</a>
+      <a href="https://u7109.github.io/app/Lake/oldversion/oldversions.html" class="glass-btn">☁️ 旧版本</a>
+      <a href="https://github.com/u7109/HackerTool-Lake" class="glass-btn">🐙 GitHub</a>
+    </nav>
+  </header>
+
+  <!-- 侧边栏 -->
+  <div class="sidebar">
+    <a href="https://u7109.github.io/app/Lake/index.html" class="glass-btn">🏠 Lake 首页</a>
+    <a href="https://u7109.github.io/app/Lake/oldversion/download.html" class="glass-btn">📱 软件</a>
+    <a href="https://u7109.github.io/app/Lake/oldversion/oldversions.html" class="glass-btn">☁️ 旧版本</a>
+    <a href="https://github.com/u7109/HackerTool-Lake" class="glass-btn">🐙 GitHub</a>
   </div>
-  <h2 class="title">Lake旧版本列表</h2>
-  <a href="download.html" class="button orange">LakeV0.3</a>
-  <a href="downloadV0.25.html" class="button orange">LakeV0.25</a>
-  <a href="downloadV0.2.html" class="button orange">LakeV0.2</a>
-  <a href="downloadV0.1.html" class="button orange">LakeV0.1</a>
+
+  <main class="glass-panel">
+    <!-- 页面专属内容 -->
+    <section class="content-section">
+      <h1>Lake 旧版本列表</h1>
+
+      <div class="app-list">
+        <a href="https://u7109.github.io/app/Lake/oldversion/download.html" class="app-button">LakeV0.3</a>
+        <a href="https://u7109.github.io/app/Lake/oldversion/downloadV0.25.html" class="app-button">LakeV0.25</a>
+        <a href="https://u7109.github.io/app/Lake/oldversion/downloadV0.2.html" class="app-button">LakeV0.2</a>
+        <a href="https://u7109.github.io/app/Lake/oldversion/downloadV0.1.html" class="app-button">LakeV0.1</a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

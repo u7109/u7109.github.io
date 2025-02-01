@@ -1,205 +1,460 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Minecraft存档</title>
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-      }
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft 存档</title>
   
-      body {
-        background-color: #f0f0f0;
-        color: #333333;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        position: relative;
-        cursor: url('https://u7109.github.io/pointer.cur'), auto; /* Set default custom cursor */
+  <!-- 公共毛玻璃样式 -->
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --gradient-primary: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      --text-primary: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--gradient-primary) fixed;
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2rem;
+      cursor: url('https://u7109.github.io/pointer.cur'), auto;
+      font-size: calc(1rem + 0.5vw);
+    }
+
+    .main-header {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      left: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+
+    .brand {
+      font-size: 2rem;
+      font-weight: 300;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .glass-btn {
+      display: inline-flex;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin: 6rem auto 2rem;
+      max-width: 1200px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section {
+      padding: 2rem;
+      margin: 2rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      text-align: center;
+    }
+
+    .content-section h1 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .main-footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+    }
+
+    .sidebar {
+      display: none;
+      position: fixed;
+      top: 2rem;
+      left: 0;
+      bottom: 0;
+      width: 200px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.5rem;
+      padding: 1rem;
+      z-index: 1001;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%);
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 1rem 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hamburger {
+      display: block;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      background-color: var(--text-primary);
+      height: 5px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger div:nth-child(1) {
+      top: 0;
+    }
+
+    .hamburger div:nth-child(2) {
+      top: 10px;
+    }
+
+    .hamburger div:nth-child(3) {
+      top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .main-header {
+        display: flex;
+        justify-content: space-between;
       }
-  
-      h1 {
-        font-size: 48px;
-        color: #333333;
-        margin: 30px;
-        text-align: left;
-        position: absolute;
-        top: 0;
-        left: 0;
+
+      .nav-links {
+        display: none;
       }
-  
-      .button, .links a {
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        margin: 10px;
-        padding: 12px 24px;
-        border-radius: 25px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        cursor: url('https://u7109.github.io/link.cur'), pointer; /* Set custom cursor for buttons and links */
-      }
-  
-      .button:hover, .links a:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-      }
-  
-      .button {
+
+      .sidebar {
         display: block;
-        font-size: 24px;
-        width: 250px;
-        margin: 20px auto;
       }
-  
-      .button.orange {
-        background-color: #ff6f00;
-        color: #ffffff;
+
+      .hamburger {
+        display: block;
       }
-  
-      .button.orange:hover {
-        background-color: #ff4f00;
+
+      .sidebar a {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
       }
-  
-      .links {
-        position: absolute;
-        top: 30px;
-        right: 30px;
+
+      .glass-panel {
+        margin-top: 2rem;
+        padding: 1.5rem;
       }
-  
-      .links a {
-        background-color: #007bff;
-        color: #ffffff;
-        font-size: 18px;
+
+      .content-section {
+        padding: 1.5rem;
       }
-  
-      .links a:hover {
-        background-color: #0056b3;
+    }
+
+    @media (min-width: 769px) {
+      .hamburger {
+        display: none;
       }
-    </style>
-  </head>
+
+      .sidebar {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    @supports not (backdrop-filter: blur(12px)) {
+      .glass-panel,
+      .main-header,
+      .glass-btn,
+      .sidebar {
+        background: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    /* 页面专属样式 */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .download-button {
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: url('https://u7109.github.io/link.cur'), pointer;
+      font-size: calc(1rem + 0.4vw);
+      margin-bottom: 1rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .download-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 图片网格布局 */
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-gap: 1rem;
+    }
+
+    .image-gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .image-gallery img:hover {
+      transform: scale(1.05);
+    }
+
+  </style>
+
+  <!-- 公共脚本 -->
+  <script>
+    // 汉堡菜单点击事件
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const hamburgerDivs = document.querySelectorAll('.hamburger div');
+
+      sidebar.style.transform = sidebar.style.transform === 'translateX(0%)' ? 'translateX(-100%)' : 'translateX(0%)';
+
+      if (sidebar.style.transform === 'translateX(0%)') {
+        hamburgerDivs[0].style.transform = 'rotate(45deg)';
+        hamburgerDivs[1].style.opacity = '0';
+        hamburgerDivs[2].style.transform = 'rotate(-45deg)';
+      } else {
+        hamburgerDivs[0].style.transform = 'rotate(0)';
+        hamburgerDivs[1].style.opacity = '1';
+        hamburgerDivs[2].style.transform = 'rotate(0)';
+      }
+    }
+  </script>
+</head>
 <body>
-  <h1>u7109</h1>
-  <div class="links">
-    <a href="https://u7109.github.io/pan/panlist.html">云盘首页</a>
-    <a href="https://github.com/u7109">GitHub</a>
+  <header class="main-header">
+    <a href="/" class="brand">u7109</a>
+
+    <!-- 汉堡菜单 -->
+    <div class="hamburger" onclick="toggleSidebar()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="https://u7109.github.io" class="glass-btn">🏠 首页</a>
+      <a href="https://u7109.github.io/app/applist.html" class="glass-btn">📱 软件</a>
+      <a href="https://u7109.github.io/pan/panlist.html" class="glass-btn">☁️ 云盘</a>
+      <a href="https://github.com/u7109" class="glass-btn">🐙 GitHub</a>
+    </nav>
+  </header>
+
+  <!-- 侧边栏 -->
+  <div class="sidebar">
+    <a href="https://u7109.github.io" class="glass-btn">🏠 首页</a>
+    <a href="https://u7109.github.io/app/applist.html" class="glass-btn">📱 软件</a>
+    <a href="https://u7109.github.io/pan/panlist.html" class="glass-btn">☁️ 云盘</a>
+    <a href="https://github.com/u7109" class="glass-btn">🐙 GitHub</a>
   </div>
 
-  <div>
-    <a href="https://www.123pan.com/s/3OuLVv-dg0Q3.html" class="button orange">123云盘下载（存档）</a>
-    <a href="https://www.123pan.com/s/3OuLVv-t9KQ3" class="button orange">123云盘下载（图片）</a>
-  </div>
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.27.16.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.27.14.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.52.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.47.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.43.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.40.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-05_19.34.28.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.52.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_16.06.43.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_16.06.39.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_16.06.38.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_15.16.12.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_12.17.12.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.56.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.54.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.52.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.27.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.25.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.24.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.22.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_16.21.08.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.32.53.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.28.58.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.27.52.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.08.15.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.46.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.43.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.42.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.41.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.39.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-08_16.37.07.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-08_16.37.12.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_15.21.03.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_15.21.02.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.07.02.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.06.59.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.06.56.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.06.55.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.55.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.43.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.42.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.40.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.38.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_22.08.43.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_22.08.39.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_22.08.35.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_20.12.17.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_20.12.15.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_20.12.11.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_17.45.01.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_17.45.00.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_17.44.59.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-20_22.01.56.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-20_22.01.49.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-20_22.01.46.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_21.00.42.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_21.00.40.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_21.00.38.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.59.44.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.59.33.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.59.27.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.43.37.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.18.27.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.23.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.16.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.15.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.14.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.12.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.15.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.10.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.09.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.07.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.05.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_20.51.39.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_20.51.35.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_20.51.33.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_19.21.01.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_19.21.00.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.15.22.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.44.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.43.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.37.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.34.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.20.08.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.57.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.55.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.51.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.05.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.01.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_18.06.21.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.45.12.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.45.05.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.44.55.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.44.45.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.44.40.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.39.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.45.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.49.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.50.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.53.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.54.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.58_2.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.58.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.45.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.41.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.37.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-25_21.26.54.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-25_21.26.52.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-22_11.34.48.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-22_11.34.47.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/2023-07-27_22.01.02.png" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/20230726160849.jpg" alt="picture">
-  <img src="https://u7109.github.io/pan/Minecraft/picture/20230726160836.jpg" alt="picture">
+  <main class="glass-panel">
+    <!-- 页面专属内容 -->
+    <section class="content-section">
+      <h1>Minecraft 存档</h1>
+
+      <div class="button-container">
+        <a href="https://www.123pan.com/s/3OuLVv-dg0Q3.html" class="download-button">📁 123云盘下载（存档）</a>
+        <a href="https://www.123pan.com/s/3OuLVv-t9KQ3" class="download-button">🖼️ 123云盘下载（图片）</a>
+      </div>
+
+      <div class="image-gallery">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.27.16.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.27.14.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.52.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.47.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.43.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-07_14.25.40.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-05_19.34.28.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.52.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_16.06.43.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_16.06.39.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_16.06.38.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_15.16.12.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-10-01_12.17.12.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.56.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.54.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-21_16.33.52.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.27.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.25.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.24.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_18.41.22.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-17_16.21.08.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.32.53.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.28.58.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.27.52.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-16_15.08.15.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.46.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.43.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.42.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.41.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-15_20.31.39.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-08_16.37.07.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-08_16.37.12.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_15.21.03.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_15.21.02.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.07.02.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.06.59.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.06.56.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_12.06.55.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.55.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.43.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.42.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.40.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-09-01_11.54.38.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_22.08.43.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_22.08.39.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_22.08.35.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_20.12.17.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_20.12.15.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_20.12.11.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_17.45.01.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_17.45.00.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-30_17.44.59.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-20_22.01.56.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-20_22.01.49.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-20_22.01.46.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_21.00.42.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_21.00.40.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_21.00.38.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.59.44.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.59.33.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.59.27.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.43.37.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-17_20.18.27.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.23.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.16.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.15.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.14.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-16_22.03.12.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.15.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.10.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.09.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.07.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_21.36.05.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_20.51.39.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_20.51.35.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_20.51.33.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_19.21.01.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-13_19.21.00.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.15.22.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.44.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.43.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.37.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-11_22.14.34.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.20.08.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.57.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.55.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.51.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.05.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_21.19.01.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-07_18.06.21.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.45.12.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.45.05.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.44.55.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.44.45.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-05_21.44.40.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.39.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.45.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.49.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.50.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.53.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-04_17.54.54.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.58_2.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.58.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.45.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.41.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2024-08-03_22.26.37.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-25_21.26.54.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-25_21.26.52.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-22_11.34.48.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2023-08-22_11.34.47.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/2023-07-27_22.01.02.png" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/20230726160849.jpg" alt="picture">
+        <img src="https://u7109.github.io/pan/Minecraft/picture/20230726160836.jpg" alt="picture">
+        <!-- 将所有图片都放在这里 -->
+        <!-- 为了简洁，这里只展示了部分图片链接 -->
+      </div>
+    </section>
+  </main>
 </body>
 </html>
